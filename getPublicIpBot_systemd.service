@@ -6,13 +6,12 @@ After=network.target
 
 [Service]
 Type=simple
-User=$(whomai)
-Group=groups $(whomai)
-WorkingDirectory=~/GetPublicIpBOT/
+User=some_user
+Group=some_group
+WorkingDirectory=/home/some_user/GetPublicIpBOT/
 ExecStart=/usr/bin/python3 ~/GetPublicIpBOT/main.py
 Restart=always
 RestartSec=5
-Environment=
 
 [Install]
 WantedBy=multi-user.target
