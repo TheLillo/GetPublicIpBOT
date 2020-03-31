@@ -27,8 +27,12 @@ task = lambda f: all_commands.setdefault(f.__name__, f)
 def send_public_ip(update, context):
     if update.effective_chat.type == 'private':
         if str(update.effective_user.id) == USERID:
-            my_public_ip = subprocess.run(["curl", 'ifconfig.me'], capture_output=True, encoding='utf-8').stdout
-            update.message.reply_text("Il Tuo Ip : {}".format(str(my_public_ip)))
+            try:
+                my_public_ip = subprocess.run(["dig", "+short", "myip.opendns.com", "@resolver1.opendns.com"], check=True,
+                                 capture_output=True, encoding='utf-8').stdout
+                update.message.reply_text("Il Tuo Ip : {}".format(str(my_public_ip)))
+            except :
+                update.message.reply_text("Something went wrong :)")
         else:
             update.message.reply_text("This bot is not for you ! :)")
     else:
